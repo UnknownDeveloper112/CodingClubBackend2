@@ -80,9 +80,10 @@ class SimpleJSONServer(BaseHTTPRequestHandler):
 
     def invalid_URL(self,context):
 
-        self.send_header("Content-type", "text/html; charset=utf-8")
+        self.send_header("Content-type", "application/json; charset=utf-8")
         self.end_headers()
-        self.wfile.write("Invalid {}".format(context).encode("utf-8"))
+        text='{{"error":"invalid {}"}}'.format(context)
+        self.wfile.write(text.encode("utf-8"))
 
 
 
@@ -92,7 +93,7 @@ class SimpleJSONServer(BaseHTTPRequestHandler):
 
         PATH=self.path[1:].split(",")
 
-        if PATH[0]=="" or PATH[0]=="favicon.ico":
+        if PATH[0]=="":
             self.json_data(self.ID)
 
 
